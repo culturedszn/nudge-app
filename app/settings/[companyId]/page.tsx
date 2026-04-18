@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import Link from "next/link";
+import { Button, Heading } from "@whop/react/components";
 import { DEFAULT_SETTINGS, type MemberRow, type SettingsRow, supabaseRequest } from "@/lib/supabase";
 import { whopsdk } from "@/lib/whop-sdk";
 import { SettingsForm } from "./settings-form";
@@ -45,16 +46,13 @@ export default async function SettingsPage({
 	};
 
 	return (
-		<div className="min-h-screen bg-[#f5f5f5] px-4 py-6 md:px-6 md:py-8">
+		<div className="min-h-screen px-4 py-6 md:px-6 md:py-8">
 			<div className="mx-auto w-full max-w-3xl">
 				<div className="mb-6 flex items-center gap-3">
-					<Link
-						href={`/dashboard/${companyId}`}
-						className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#111827] shadow-sm ring-1 ring-black/5"
-					>
-						←
-					</Link>
-					<h1 className="text-2xl font-bold text-[#111827]">Nudge Settings</h1>
+					<Button asChild variant="surface" size="2">
+						<Link href={`/dashboard/${companyId}`}>←</Link>
+					</Button>
+					<Heading size="6">Nudge Settings</Heading>
 				</div>
 
 				<SettingsForm

@@ -2,6 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+	Button,
+	Card,
+	Heading,
+	Select,
+	Spinner,
+	Switch,
+	Text,
+	TextArea,
+} from "@whop/react";
+} from "@whop/react/components";
 import type { SettingsRow } from "@/lib/supabase";
 
 type FormState = Pick<
@@ -111,22 +122,26 @@ export function SettingsForm({
 				}
 			>
 				<div className="space-y-2">
-					<label className="text-sm font-medium text-[#111827]">Send after</label>
-					<select
+					<Text size="2" weight="medium">
+						Send after
+					</Text>
+					<Select.Root
 						value={values.inactive_days}
-						onChange={(event) =>
+						onValueChange={(nextValue) =>
 							setValues((prev) => ({
 								...prev,
-								inactive_days: Number(event.target.value),
+								inactive_days: Number(nextValue),
 							}))
 						}
-						className="h-11 w-full rounded-lg border border-[#e5e7eb] bg-white px-3 text-sm text-[#111827] outline-none focus:border-[#9ca3af]"
 					>
-						<option value={3}>3 days</option>
-						<option value={7}>7 days</option>
-						<option value={14}>14 days</option>
-						<option value={30}>30 days</option>
-					</select>
+						<Select.Trigger />
+						<Select.Content>
+							<Select.Item value={3}>3 days</Select.Item>
+							<Select.Item value={7}>7 days</Select.Item>
+							<Select.Item value={14}>14 days</Select.Item>
+							<Select.Item value={30}>30 days</Select.Item>
+						</Select.Content>
+					</Select.Root>
 				</div>
 				<MessageField
 					label="Message"
@@ -177,20 +192,35 @@ export function SettingsForm({
 				/>
 			</TriggerCard>
 
-			<p className="text-sm text-[#6b7280]">
-				{isSyncing ? "Syncing members..." : `${trackedCount} members currently being tracked`}
-			</p>
+			{isSyncing ? (
+				<Text color="gray" size="2" className="inline-flex items-center gap-2">
+					<Spinner loading size="1" />
+					Syncing members...
+				</Text>
+			) : (
+				<Text color="gray" size="2">
+					{`${trackedCount} members currently being tracked`}
+				</Text>
+			)}
 
-			{error ? <p className="text-sm text-[#dc2626]">{error}</p> : null}
+			{error ? (
+				<Text size="2" color="red">
+					{error}
+				</Text>
+			) : null}
 
-			<button
+			<Button
 				type="button"
 				onClick={saveSettings}
 				disabled={isSaving}
-				className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-[#f97316] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#ea580c] disabled:cursor-not-allowed disabled:opacity-70"
+				size="3"
+				color="orange"
+				style={{ width: "100%" }}
 			>
-				{isSaving ? "Saving..." : "Save & Activate Nudge"}
-			</button>
+				<Spinner loading={isSaving} size="1">
+					{isSaving ? "Saving..." : "Save & Activate Nudge"}
+				</Spinner>
+			</Button>
 		</div>
 	);
 }
@@ -209,16 +239,18 @@ function TriggerCard({
 	children: React.ReactNode;
 }) {
 	return (
-		<section className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.06)] ring-1 ring-black/5 md:p-6">
+		<Card style={{ padding: "1.25rem" }}>
 			<div className="flex items-start justify-between gap-4">
 				<div>
-					<h2 className="text-lg font-semibold text-[#111827]">{title}</h2>
-					<p className="mt-1 text-sm text-[#6b7280]">{description}</p>
+					<Heading size="3">{title}</Heading>
+					<Text size="2" color="gray" className="mt-1">
+						{description}
+					</Text>
 				</div>
-				<Toggle checked={enabled} onChange={onToggle} />
+				<Switch checked={enabled} onCheckedChange={onToggle} />
 			</div>
 			<div className="mt-5 space-y-4">{children}</div>
-		</section>
+		</Card>
 	);
 }
 
@@ -237,39 +269,19 @@ function MessageField({
 }) {
 	return (
 		<div className="space-y-2">
-			<label className="text-sm font-medium text-[#111827]">{label}</label>
-			<textarea
+			<Text size="2" weight="medium">
+				{label}
+			</Text>
+			<TextArea
 				value={value}
 				onChange={(event) => onChange(event.target.value)}
 				placeholder={placeholder}
+				maxLength={160}
 				rows={4}
-				className="w-full resize-none rounded-lg border border-[#e5e7eb] bg-white px-3 py-3 text-sm text-[#111827] outline-none focus:border-[#9ca3af]"
 			/>
-			<p className="text-xs text-[#9ca3af]">{count}/160</p>
+			<Text size="1" color="gray">
+				{count}/160
+			</Text>
 		</div>
-	);
-}
-
-function Toggle({
-	checked,
-	onChange,
-}: {
-	checked: boolean;
-	onChange: (checked: boolean) => void;
-}) {
-	return (
-		<button
-			type="button"
-			onClick={() => onChange(!checked)}
-			className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
-				checked ? "bg-[#f97316]" : "bg-[#d1d5db]"
-			}`}
-		>
-			<span
-				className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${
-					checked ? "translate-x-5" : "translate-x-1"
-				}`}
-			/>
-		</button>
 	);
 }
