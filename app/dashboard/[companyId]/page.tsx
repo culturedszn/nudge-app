@@ -24,7 +24,17 @@ export default async function DashboardPage({
 	const hasSettings = settings.length > 0;
 	const query = new URLSearchParams({
 		companyId,
-		...(!hasSettings ? DEFAULT_SETTINGS : {}),
+		...(!hasSettings
+			? {
+					inactive_days: String(DEFAULT_SETTINGS.inactive_days ?? 7),
+					inactive_message: DEFAULT_SETTINGS.inactive_message ?? "",
+					inactive_enabled: String(DEFAULT_SETTINGS.inactive_enabled ?? true),
+					cancel_message: DEFAULT_SETTINGS.cancel_message ?? "",
+					cancel_enabled: String(DEFAULT_SETTINGS.cancel_enabled ?? true),
+					payment_message: DEFAULT_SETTINGS.payment_message ?? "",
+					payment_enabled: String(DEFAULT_SETTINGS.payment_enabled ?? true),
+			  }
+			: {}),
 	}).toString();
 
 	return (
