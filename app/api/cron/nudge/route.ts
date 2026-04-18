@@ -34,6 +34,50 @@ async function createNotification(options: {
 		throw new Error(`Member ${options.memberId} has no linked user id`);
 	}
 
+	const notificationApi = (
+		whopsdk as unknown as {
+			notifications?: { create?: (payload: unknown) => Promise<unknown> };
+		}
+	).notifications;
+
+	if (notificationApi?.create) {
+		const attempts: Array<Record<string, string>> = [
+			{
+				company_id: options.companyId,
+				user_id: userId,
+				message: options.message,
+			},
+			{
+				company_id: options.companyId,
+				member_id: options.memberId,
+				message: options.message,
+			},
+			{
+				company_id: options.companyId,
+				user_id: userId,
+				title: "Nudge",
+				content: options.message,
+			},
+		];
+
+		let lastError: unknown;
+		for (const payload of attempts) {
+			try {
+				await notificationApi.create(payload);
+				return;
+			} catch (error) {
+				lastError = error;
+			}
+		}
+
+		if (lastError) {
+			console.warn(
+				`Notification API attempts failed for member ${options.memberId}; falling back to support message`,
+				lastError,
+			);
+		}
+	}
+
 	const supportChannel = await whopsdk.supportChannels.create({
 		company_id: options.companyId,
 		user_id: userId,
