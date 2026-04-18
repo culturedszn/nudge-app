@@ -125,7 +125,7 @@ export function SettingsForm({
 						Send after
 					</Text>
 					<Select.Root
-						value={values.inactive_days}
+						value={String(values.inactive_days)}
 						onValueChange={(nextValue) =>
 							setValues((prev) => ({
 								...prev,
@@ -135,10 +135,10 @@ export function SettingsForm({
 					>
 						<Select.Trigger />
 						<Select.Content>
-							<Select.Item value={3}>3 days</Select.Item>
-							<Select.Item value={7}>7 days</Select.Item>
-							<Select.Item value={14}>14 days</Select.Item>
-							<Select.Item value={30}>30 days</Select.Item>
+							<Select.Item value="3">3 days</Select.Item>
+							<Select.Item value="7">7 days</Select.Item>
+							<Select.Item value="14">14 days</Select.Item>
+							<Select.Item value="30">30 days</Select.Item>
 						</Select.Content>
 					</Select.Root>
 				</div>
