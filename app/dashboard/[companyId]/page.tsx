@@ -76,7 +76,7 @@ export default async function DashboardPage({
 			) : (
 				<Link
 					href={`/settings/${companyId}?${query}`}
-					className="mx-auto mt-9 inline-flex h-12 w-full max-w-[400px] items-center justify-center rounded-xl bg-[#f97316] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#ea580c]"
+					className="mx-auto mt-9 inline-flex h-12 w-full max-w-[400px] items-center justify-center rounded-xl bg-[#E8442A] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#CC3B24]"
 				>
 					Set up Nudge
 				</Link>
