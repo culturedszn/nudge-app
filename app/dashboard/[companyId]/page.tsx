@@ -61,19 +61,19 @@ export default async function DashboardPage({
 
 			{hasSettings ? (
 				<div className="mx-auto mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
-					<Button asChild size="3" className="w-full">
+					<Button asChild size="3" className="w-full" style={{ backgroundColor: "#FA4616", color: "white" }}>
 						<Link href={`/log/${companyId}`}>
 						View sent nudges
 						</Link>
 					</Button>
-					<Button asChild size="3" variant="surface" className="w-full">
+					<Button asChild size="3" className="w-full" style={{ backgroundColor: "#FA4616", color: "white" }}>
 						<Link href={`/settings/${companyId}`}>
 						Edit settings
 						</Link>
 					</Button>
 				</div>
 			) : (
-				<Button asChild size="3" color="orange" className="mx-auto mt-9 w-full max-w-[400px]">
+				<Button asChild size="3" className="mx-auto mt-9 w-full max-w-[400px]" style={{ backgroundColor: "#FA4616", color: "white" }}>
 					<Link href={`/settings/${companyId}?${query}`}>Set up Nudge</Link>
 				</Button>
 			)}
