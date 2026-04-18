@@ -9,22 +9,22 @@ function getTriggerBadge(triggerType: NudgeLogRow["trigger_type"]) {
 		case "inactive":
 			return {
 				label: "💤 Inactive",
-				color: "blue",
+				color: "blue" as const,
 			};
 		case "canceling":
 			return {
 				label: "🚨 Canceling",
-				color: "red",
+				color: "red" as const,
 			};
 		case "payment_failed":
 			return {
 				label: "💳 Payment Failed",
-				color: "yellow",
+				color: "amber" as const,
 			};
 		default:
 			return {
 				label: triggerType,
-				color: "gray",
+				color: "gray" as const,
 			};
 	}
 }
@@ -80,7 +80,7 @@ export default async function NudgeLogPage({
 											<Text weight="bold" className="mt-2">
 												@{row.username}
 											</Text>
-											<Text color="gray" truncate className="mt-1">
+											<Text color="gray" className="mt-1 truncate">
 												{truncate(row.message_sent, 80)}
 											</Text>
 										</div>
