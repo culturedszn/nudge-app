@@ -11,7 +11,6 @@ import {
 	Switch,
 	Text,
 	TextArea,
-} from "@whop/react";
 } from "@whop/react/components";
 import type { SettingsRow } from "@/lib/supabase";
 
