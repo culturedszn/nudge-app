@@ -27,36 +27,22 @@ async function createNotification(options: {
 	memberId: string;
 	message: string;
 }): Promise<void> {
-	const attempts = [
-		{
-			company_id: options.companyId,
-			member_id: options.memberId,
-			message: options.message,
-		},
-		{
-			company_id: options.companyId,
-			user_id: options.memberId,
-			message: options.message,
-		},
-		{
-			company_id: options.companyId,
-			title: "Nudge",
-			content: options.message,
-			user_id: options.memberId,
-		},
-	];
+	const member = await whopsdk.members.retrieve(options.memberId);
+	const userId = member.user?.id;
 
-	let lastError: unknown;
-	for (const payload of attempts) {
-		try {
-			await whopsdk.notifications.create(payload as never);
-			return;
-		} catch (error) {
-			lastError = error;
-		}
+	if (!userId) {
+		throw new Error(`Member ${options.memberId} has no linked user id`);
 	}
 
-	throw lastError;
+	const supportChannel = await whopsdk.supportChannels.create({
+		company_id: options.companyId,
+		user_id: userId,
+	});
+
+	await whopsdk.messages.create({
+		channel_id: supportChannel.id,
+		content: options.message,
+	});
 }
 
 async function appendNudgeLog(options: {
@@ -84,18 +70,16 @@ async function appendNudgeLog(options: {
 
 async function fetchBillingLink(companyId: string, memberId: string): Promise<string> {
 	try {
-		const byCompany = await whopsdk.members.retrieve({
-			company_id: companyId,
-			id: memberId,
-		} as never);
-		return byCompany?.manage_url ?? byCompany?.billing_url ?? "https://whop.com";
+		const member = await whopsdk.members.retrieve(memberId);
+		const billingUrl = (member as { manage_url?: string; billing_url?: string })
+			.manage_url;
+		const fallbackBillingUrl = (
+			member as { manage_url?: string; billing_url?: string }
+		).billing_url;
+
+		return billingUrl ?? fallbackBillingUrl ?? `https://whop.com/company/${companyId}`;
 	} catch {
-		try {
-			const basic = await whopsdk.members.retrieve(memberId as never);
-			return basic?.manage_url ?? basic?.billing_url ?? "https://whop.com";
-		} catch {
-			return "https://whop.com";
-		}
+		return `https://whop.com/company/${companyId}`;
 	}
 }
 
