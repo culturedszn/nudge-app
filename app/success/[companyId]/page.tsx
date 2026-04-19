@@ -10,29 +10,40 @@ export default async function SuccessPage({
 	const { companyId } = await params;
 
 	return (
-		<div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#f5f5f5] px-4 py-10 text-center">
-			<Image
-				src="/thumbsup.svg"
-				alt="Thumbs up illustration"
-				width={180}
-				height={180}
-				className="h-[180px] w-auto"
-				priority
-			/>
+		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] px-4 py-10 text-center">
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute -left-20 top-0 h-56 w-56 rounded-full bg-[#FA4616]/18 blur-3xl" />
+				<div className="absolute -right-20 bottom-8 h-64 w-64 rounded-full bg-[#0f172a]/8 blur-3xl" />
+			</div>
 
-			<h1 className="mt-6 text-[28px] font-bold text-[#111111]">Nudge is running.</h1>
-			<p className="mt-3 max-w-[360px] text-[15px] leading-[1.6] text-[#666666]">
-				We&apos;re watching your members in the background. You&apos;ll never lose one without a
-				fight.
-			</p>
+			<div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[540px] items-center justify-center">
+				<div className="w-full rounded-[28px] border border-white/80 bg-white/75 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.14)] backdrop-blur-xl sm:p-9">
+					<Image
+						src="/thumbsup.svg"
+						alt="Thumbs up illustration"
+						width={180}
+						height={180}
+						className="mx-auto h-[180px] w-auto"
+						priority
+					/>
 
-			<Button
-				asChild
-				size="3"
-				className="mt-8 h-12 w-full max-w-[360px] rounded-[10px] bg-[#FA4616] text-[15px] font-semibold text-white transition-all duration-200 hover:brightness-95"
-			>
-				<Link href={`/home/${companyId}`}>Go to Dashboard</Link>
-			</Button>
+					<h1 className="mt-6 text-[30px] font-semibold tracking-[-0.02em] text-[#0f172a]">
+						Nudge is running.
+					</h1>
+					<p className="mx-auto mt-3 max-w-[360px] text-[15px] leading-[1.65] text-[#526070]">
+						We&apos;re watching your members in the background. You&apos;ll never lose one without a
+						fight.
+					</p>
+
+					<Button
+						asChild
+						size="3"
+						className="mt-8 h-12 w-full rounded-xl bg-[#FA4616] text-[15px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+					>
+						<Link href={`/home/${companyId}`}>Go to Dashboard</Link>
+					</Button>
+				</div>
+			</div>
 		</div>
 	);
 }

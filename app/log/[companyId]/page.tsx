@@ -67,13 +67,22 @@ export default async function NudgeLogPage({
 	});
 
 	return (
-		<div className="min-h-screen bg-[#f5f5f5] px-4 py-6 md:px-6 md:py-8">
-			<div className="mx-auto w-full max-w-3xl">
-				<div className="mb-6 flex items-center gap-3">
-					<Button asChild size="2" className="gap-1.5 rounded-full border border-zinc-300 bg-white px-3 text-zinc-700">
+		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] px-4 py-6 md:px-6 md:py-8">
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute -left-16 top-0 h-56 w-56 rounded-full bg-[#FA4616]/14 blur-3xl" />
+				<div className="absolute -right-16 bottom-12 h-64 w-64 rounded-full bg-[#0f172a]/7 blur-3xl" />
+			</div>
+
+			<div className="relative mx-auto w-full max-w-3xl">
+				<div className="mb-6 rounded-[20px] border border-white/80 bg-white/75 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.1)] backdrop-blur-xl md:p-5">
+					<div className="flex items-center gap-3">
+						<Button asChild size="2" className="gap-1.5 rounded-full border border-zinc-300 bg-white px-3 text-zinc-700">
 						<Link href={`/home/${companyId}`}>← Back</Link>
 					</Button>
-					<Heading size="6" className="text-[20px] font-bold text-[#111111]">Nudges Sent</Heading>
+						<Heading size="6" className="text-[22px] font-semibold tracking-[-0.02em] text-[#0f172a]">
+							Nudges Sent
+						</Heading>
+					</div>
 				</div>
 
 				{rows.length === 0 ? (
@@ -94,7 +103,7 @@ export default async function NudgeLogPage({
 							return (
 								<Card
 									key={row.id}
-									className="mx-1 rounded-xl bg-white px-4 py-3.5 [box-shadow:0_1px_3px_rgba(0,0,0,0.06)]"
+									className="mx-1 rounded-xl border border-white/85 bg-white/80 px-4 py-3.5 shadow-[0_8px_24px_rgba(15,23,42,0.08)] backdrop-blur-sm"
 								>
 									<div className="flex items-center justify-between gap-3">
 										<span

@@ -161,34 +161,59 @@ export function HomeDashboardClient({
 	}
 
 	return (
-		<div className="min-h-screen bg-[#f5f5f5] pb-10">
+		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] pb-10">
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute -left-16 top-4 h-56 w-56 rounded-full bg-[#FA4616]/15 blur-3xl" />
+				<div className="absolute -right-20 top-28 h-72 w-72 rounded-full bg-[#0f172a]/7 blur-3xl" />
+			</div>
+
+			<div className="relative mx-auto w-full max-w-4xl">
 			<Toast
 				message={toastState.message}
 				type={toastState.type}
 				visible={toastState.visible}
 			/>
 
-			<div className="flex items-start justify-between px-6 pb-0 pt-6">
-				<div>
-					<Heading size="6" className="text-[22px] font-bold text-[#111111]">
-						Nudge
-					</Heading>
-					<Text className="mt-1 text-[13px] text-[#888888]">Your retention is on autopilot.</Text>
+			<div className="px-4 pt-6 sm:px-6">
+				<div className="rounded-[24px] border border-white/80 bg-white/75 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-6">
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<div>
+							<Heading size="6" className="text-[27px] font-semibold tracking-[-0.02em] text-[#0f172a]">
+								Nudge
+							</Heading>
+							<Text className="mt-1 text-[14px] text-[#526070]">
+								Your retention engine is running on autopilot.
+							</Text>
+						</div>
+						<div className="flex flex-wrap items-center gap-2">
+							<Button
+								asChild
+								size="2"
+								className="h-10 rounded-lg border border-[#e2e8f0] bg-white px-3.5 text-[13px] font-medium text-[#334155]"
+							>
+								<Link href={`/settings/${companyId}`}>Settings</Link>
+							</Button>
+							<Button
+								asChild
+								size="2"
+								className="h-10 rounded-lg bg-[#FA4616] px-4 text-[13px] font-semibold text-white shadow-[0_10px_22px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+							>
+								<Link href={`/log/${companyId}`}>View sent nudges</Link>
+							</Button>
+						</div>
+					</div>
 				</div>
-				<Button asChild variant="ghost" className="text-[13px] font-medium text-[#FA4616]">
-					<Link href={`/log/${companyId}`}>View sent nudges →</Link>
-				</Button>
 			</div>
 
-			<Text className="px-6 pb-3 pt-6 text-[13px] font-semibold uppercase tracking-[0.5px] text-[#888888]">
+			<Text className="px-6 pb-3 pt-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#64748b]">
 				Active Nudges
 			</Text>
 
-			<div className="space-y-3 px-4">
+			<div className="space-y-3 px-4 sm:px-6">
 				{cards.map((card) => (
 					<Card
 						key={card.key}
-						className="rounded-[14px] bg-white p-[18px] [box-shadow:0_1px_4px_rgba(0,0,0,0.07)]"
+						className="rounded-[18px] border border-white/80 bg-white/80 p-[18px] shadow-[0_10px_28px_rgba(15,23,42,0.08)] backdrop-blur-sm"
 					>
 						{confirmingDelete === card.key ? (
 							<div>
@@ -239,7 +264,7 @@ export function HomeDashboardClient({
 									</div>
 								</div>
 
-								<div className="mt-2 rounded-lg bg-[#f9f9f9] px-3 py-2.5 text-left">
+								<div className="mt-2 rounded-xl bg-[#f8fafc] px-3 py-2.5 text-left">
 									<Text className="text-[13px] italic text-[#555555]">
 										{card.message ? truncateMessage(card.message, 80) : "No message configured..."}
 									</Text>
@@ -272,12 +297,13 @@ export function HomeDashboardClient({
 			</div>
 
 			{allPaused ? (
-				<div className="mx-4 mt-4 rounded-xl border border-[#fde8e0] bg-[#fff8f6] p-4">
+				<div className="mx-4 mt-4 rounded-xl border border-[#fed7aa] bg-[#fff7ed] p-4 sm:mx-6">
 					<Text className="text-center text-[13px] text-[#FA4616]">
 						All nudges are paused. Edit a nudge to reactivate.
 					</Text>
 				</div>
 			) : null}
+			</div>
 		</div>
 	);
 }
