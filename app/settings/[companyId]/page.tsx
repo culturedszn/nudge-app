@@ -49,8 +49,20 @@ export default async function SettingsPage({
 		<div className="min-h-screen px-4 py-6 md:px-6 md:py-8">
 			<div className="mx-auto w-full max-w-3xl">
 				<div className="mb-6 flex items-center gap-3">
-					<Button asChild variant="surface" size="2">
-						<Link href={`/dashboard/${companyId}`}>←</Link>
+					<Button
+						asChild
+						size="2"
+						className="gap-1.5"
+						style={{
+							backgroundColor: "#FFF4F0",
+							color: "#FA4616",
+							border: "1px solid #FFD6C8",
+						}}
+					>
+						<Link href={`/dashboard/${companyId}`}>
+							<span aria-hidden="true">←</span>
+							<span>Back</span>
+						</Link>
 					</Button>
 					<Heading size="6">Nudge Settings</Heading>
 				</div>

@@ -111,7 +111,16 @@ export function SettingsForm({
 	}
 
 	return (
-		<div className="space-y-5">
+		<div className="space-y-6">
+			<div className="rounded-xl border border-orange-200/60 bg-gradient-to-r from-orange-50 to-white px-4 py-3">
+				<Text size="2" weight="medium" className="text-[#FA4616]">
+					Write like a human. Keep it short, warm, and clear.
+				</Text>
+				<Text size="1" color="gray" className="mt-1">
+					Personalized messages usually perform better than generic reminders.
+				</Text>
+			</div>
+
 			<TriggerCard
 				title="💤 Inactive Members"
 				description="Sent when a member hasn't been active for a while"
@@ -120,8 +129,8 @@ export function SettingsForm({
 					setValues((prev) => ({ ...prev, inactive_enabled: enabled }))
 				}
 			>
-				<div className="space-y-2">
-					<Text size="2" weight="medium">
+				<div className="space-y-2 rounded-lg border border-zinc-200/80 bg-zinc-50/60 p-3">
+					<Text size="1" weight="bold" className="uppercase tracking-[0.08em] text-zinc-600">
 						Send after
 					</Text>
 					<Select.Root
@@ -192,14 +201,18 @@ export function SettingsForm({
 			</TriggerCard>
 
 			{isSyncing ? (
-				<Text color="gray" size="2" className="inline-flex items-center gap-2">
+				<div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
 					<Spinner loading size="1" />
-					Syncing members...
-				</Text>
+					<Text color="gray" size="2">
+						Syncing members...
+					</Text>
+				</div>
 			) : (
-				<Text color="gray" size="2">
-					{`${trackedCount} members currently being tracked`}
-				</Text>
+				<div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
+					<Text color="gray" size="2">
+						{`${trackedCount} members currently being tracked`}
+					</Text>
+				</div>
 			)}
 
 			{error ? (
@@ -213,8 +226,11 @@ export function SettingsForm({
 				onClick={saveSettings}
 				disabled={isSaving}
 				size="3"
-				color="orange"
-				style={{ width: "100%" }}
+				style={{
+					width: "100%",
+					backgroundColor: "#FA4616",
+					color: "white",
+				}}
 			>
 				<Spinner loading={isSaving} size="1">
 					{isSaving ? "Saving..." : "Save & Activate Nudge"}
@@ -240,15 +256,26 @@ function TriggerCard({
 	return (
 		<Card style={{ padding: "1.25rem" }}>
 			<div className="flex items-start justify-between gap-4">
-				<div>
-					<Heading size="3">{title}</Heading>
-					<Text size="2" color="gray" className="mt-1">
+				<div className="min-w-0">
+					<Heading size="4" className="leading-tight">
+						{title}
+					</Heading>
+					<Text size="2" color="gray" className="mt-1.5 max-w-2xl leading-6">
 						{description}
 					</Text>
 				</div>
-				<Switch checked={enabled} onCheckedChange={onToggle} />
+				<div className="flex flex-col items-end gap-1">
+					<Switch checked={enabled} onCheckedChange={onToggle} />
+					<Text
+						size="1"
+						weight="medium"
+						className={enabled ? "text-emerald-600" : "text-zinc-500"}
+					>
+						{enabled ? "Enabled" : "Paused"}
+					</Text>
+				</div>
 			</div>
-			<div className="mt-5 space-y-4">{children}</div>
+			<div className="mt-5 space-y-4 border-t border-zinc-200/80 pt-4">{children}</div>
 		</Card>
 	);
 }
@@ -266,20 +293,33 @@ function MessageField({
 	placeholder: string;
 	count: number;
 }) {
+	const countTone =
+		count >= 150
+			? "text-red-600"
+			: count >= 120
+				? "text-amber-600"
+				: "text-zinc-500";
+
 	return (
 		<div className="space-y-2">
-			<Text size="2" weight="medium">
+			<div className="flex items-center justify-between gap-3">
+				<Text size="1" weight="bold" className="uppercase tracking-[0.08em] text-zinc-600">
 				{label}
-			</Text>
+				</Text>
+				<Text size="1" className={countTone}>
+					{count}/160
+				</Text>
+			</div>
 			<TextArea
 				value={value}
 				onChange={(event) => onChange(event.target.value)}
 				placeholder={placeholder}
 				maxLength={160}
 				rows={4}
+				className="leading-6"
 			/>
-			<Text size="1" color="gray">
-				{count}/160
+			<Text size="1" color="gray" className="leading-5">
+				Use [username] to personalize and keep the tone conversational.
 			</Text>
 		</div>
 	);
