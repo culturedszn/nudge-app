@@ -131,21 +131,21 @@ export function HomeDashboardClient({
 					return {
 						...prev,
 						inactive_enabled: false,
-						inactive_message: null as unknown as string,
-						inactive_days: null as unknown as number,
+						inactive_message: "",
+						inactive_days: prev.inactive_days,
 					};
 				}
 				if (trigger === "canceling") {
 					return {
 						...prev,
 						cancel_enabled: false,
-						cancel_message: null as unknown as string,
+						cancel_message: "",
 					};
 				}
 				return {
 					...prev,
 					payment_enabled: false,
-					payment_message: null as unknown as string,
+					payment_message: "",
 				};
 			});
 
