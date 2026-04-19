@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Button, Card, Heading, Text } from "@whop/react/components";
 import { Toast } from "@/components/toast";
+import { PencilIcon, TrashIcon } from "@/components/icons";
 import type { SettingsRow } from "@/lib/supabase";
 
 type TriggerKey = "inactive" | "canceling" | "payment";
@@ -117,8 +118,11 @@ export function HomeDashboardClient({
 				body: JSON.stringify(body),
 			});
 
+			const responseData = await response.text();
+			
 			if (!response.ok) {
-				throw new Error("Failed to delete nudge");
+				console.error("Delete API error:", response.status, responseData);
+				throw new Error(`Failed to delete nudge (${response.status})`);
 			}
 
 			setSettings((prev) => {
@@ -127,21 +131,21 @@ export function HomeDashboardClient({
 					return {
 						...prev,
 						inactive_enabled: false,
-						inactive_message: "",
-						inactive_days: null as unknown as number,
+						inactive_message: null,
+						inactive_days: null,
 					};
 				}
 				if (trigger === "canceling") {
 					return {
 						...prev,
 						cancel_enabled: false,
-						cancel_message: "",
+						cancel_message: null,
 					};
 				}
 				return {
 					...prev,
 					payment_enabled: false,
-					payment_message: "",
+					payment_message: null,
 				};
 			});
 
@@ -153,7 +157,7 @@ export function HomeDashboardClient({
 			});
 			setConfirmingDelete(null);
 		} catch (error) {
-			console.error(error);
+			console.error("Delete failed:", error);
 			setToastState({ visible: true, type: "error", message: "Failed to delete nudge" });
 		} finally {
 			setIsDeleting(null);
@@ -167,49 +171,48 @@ export function HomeDashboardClient({
 				<div className="absolute -right-20 top-28 h-72 w-72 rounded-full bg-[#0f172a]/7 blur-3xl" />
 			</div>
 
-			<div className="relative mx-auto w-full max-w-4xl">
+			<div className="relative mx-auto w-full">
 			<Toast
 				message={toastState.message}
 				type={toastState.type}
 				visible={toastState.visible}
 			/>
 
-			<div className="px-4 pt-6 sm:px-6">
-				<div className="rounded-[24px] border border-white/80 bg-white/75 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-6">
-					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-						<div>
-							<Heading size="6" className="text-[27px] font-semibold tracking-[-0.02em] text-[#0f172a]">
-								Nudge
-							</Heading>
-							<Text className="mt-1 text-[14px] text-[#526070]">
-								Your retention engine is running on autopilot.
-							</Text>
-						</div>
-						<div className="flex flex-wrap items-center gap-2">
-							<Button
-								asChild
-								size="2"
-								className="h-10 rounded-lg border border-[#e2e8f0] bg-white px-3.5 text-[13px] font-medium text-[#334155]"
-							>
-								<Link href={`/settings/${companyId}`}>Settings</Link>
-							</Button>
-							<Button
-								asChild
-								size="2"
-								className="h-10 rounded-lg bg-[#FA4616] px-4 text-[13px] font-semibold text-white shadow-[0_10px_22px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
-							>
-								<Link href={`/log/${companyId}`}>View sent nudges</Link>
-							</Button>
-						</div>
+			<div className="border-b border-[#e2e8f0] bg-white/50 backdrop-blur-sm">
+				<div className="flex flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+					<div>
+						<Heading size="6" className="text-[27px] font-semibold tracking-[-0.02em] text-[#0f172a]">
+							Nudge
+						</Heading>
+						<Text className="mt-1 text-[14px] text-[#526070]">
+							Your retention engine is running on autopilot.
+						</Text>
+					</div>
+					<div className="flex flex-wrap items-center gap-2">
+						<Button
+							asChild
+							size="2"
+							className="h-10 rounded-lg border border-[#e2e8f0] bg-white px-3.5 text-[13px] font-medium text-[#334155]"
+						>
+							<Link href={`/settings/${companyId}`}>Settings</Link>
+						</Button>
+						<Button
+							asChild
+							size="2"
+							className="h-10 rounded-lg bg-[#FA4616] px-4 text-[13px] font-semibold text-white shadow-[0_10px_22px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+						>
+							<Link href={`/log/${companyId}`}>View sent nudges</Link>
+						</Button>
 					</div>
 				</div>
 			</div>
 
-			<Text className="px-6 pb-3 pt-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#64748b]">
-				Active Nudges
-			</Text>
+			<div className="px-4 py-6 sm:px-6">
+				<Text className="pb-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+					Active Nudges
+				</Text>
 
-			<div className="space-y-3 px-4 sm:px-6">
+				<div className="space-y-3">
 				{cards.map((card) => (
 					<Card
 						key={card.key}
@@ -244,22 +247,24 @@ export function HomeDashboardClient({
 										<span>{card.icon}</span>
 										<span>{card.title}</span>
 									</div>
-									<div className="flex items-center gap-2">
+									<div className="flex items-center gap-1">
 										<Button
 											type="button"
 											variant="ghost"
-											className="h-7 w-7 min-w-7 p-0 text-[#888888] transition-colors duration-200 hover:text-[#FA4616]"
+											className="h-8 w-8 min-w-8 p-0 text-[#888888] transition-colors duration-200 hover:text-[#FA4616] hover:bg-[#fff5ed]"
 											asChild
 										>
-											<Link href={`/edit/${companyId}?trigger=${card.key}`}>✎</Link>
+											<Link href={`/edit/${companyId}?trigger=${card.key}`}>
+												<PencilIcon className="w-4 h-4" />
+											</Link>
 										</Button>
 										<Button
 											type="button"
 											variant="ghost"
-											className="h-7 w-7 min-w-7 p-0 text-[#888888] transition-colors duration-200 hover:text-[#ef4444]"
+											className="h-8 w-8 min-w-8 p-0 text-[#888888] transition-colors duration-200 hover:text-[#ef4444] hover:bg-[#fef2f2]"
 											onClick={() => setConfirmingDelete(card.key)}
 										>
-											🗑
+											<TrashIcon className="w-4 h-4" />
 										</Button>
 									</div>
 								</div>
@@ -297,12 +302,13 @@ export function HomeDashboardClient({
 			</div>
 
 			{allPaused ? (
-				<div className="mx-4 mt-4 rounded-xl border border-[#fed7aa] bg-[#fff7ed] p-4 sm:mx-6">
+				<div className="mt-4 rounded-xl border border-[#fed7aa] bg-[#fff7ed] p-4">
 					<Text className="text-center text-[13px] text-[#FA4616]">
 						All nudges are paused. Edit a nudge to reactivate.
 					</Text>
 				</div>
 			) : null}
+				</div>
 			</div>
 		</div>
 	);
