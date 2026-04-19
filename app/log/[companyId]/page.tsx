@@ -1,37 +1,53 @@
 import { headers } from "next/headers";
 import Link from "next/link";
-import { Badge, Button, Card, Heading, Text } from "@whop/react/components";
+import { Button, Card, Heading, Text } from "@whop/react/components";
 import { type NudgeLogRow, supabaseRequest } from "@/lib/supabase";
 import { whopsdk } from "@/lib/whop-sdk";
 
-function getTriggerBadge(triggerType: NudgeLogRow["trigger_type"]) {
+function getTriggerBadge(triggerType: NudgeLogRow["trigger_type"]): {
+	label: string;
+	className: string;
+} {
 	switch (triggerType) {
 		case "inactive":
 			return {
 				label: "💤 Inactive",
-				color: "blue" as const,
+				className: "bg-[#eff6ff] text-[#2563eb]",
 			};
 		case "canceling":
 			return {
 				label: "🚨 Canceling",
-				color: "red" as const,
+				className: "bg-[#fef2f2] text-[#dc2626]",
 			};
 		case "payment_failed":
 			return {
-				label: "💳 Payment Failed",
-				color: "amber" as const,
+				label: "💳 Payment",
+				className: "bg-[#fefce8] text-[#ca8a04]",
 			};
 		default:
 			return {
 				label: triggerType,
-				color: "gray" as const,
+				className: "bg-zinc-100 text-zinc-600",
 			};
 	}
 }
 
-function truncate(text: string, max = 80): string {
+function truncate(text: string, max = 100): string {
 	if (text.length <= max) return text;
 	return `${text.slice(0, max).trimEnd()}...`;
+}
+
+function formatTimestamp(value: string): string {
+	const date = new Date(value);
+	const monthDay = date.toLocaleDateString(undefined, {
+		month: "short",
+		day: "numeric",
+	});
+	const time = date.toLocaleTimeString(undefined, {
+		hour: "numeric",
+		minute: "2-digit",
+	});
+	return `${monthDay} · ${time}`;
 }
 
 export default async function NudgeLogPage({
@@ -51,19 +67,24 @@ export default async function NudgeLogPage({
 	});
 
 	return (
-		<div className="min-h-screen px-4 py-6 md:px-6 md:py-8">
-			<div className="mx-auto w-full max-w-4xl">
+		<div className="min-h-screen bg-[#f5f5f5] px-4 py-6 md:px-6 md:py-8">
+			<div className="mx-auto w-full max-w-3xl">
 				<div className="mb-6 flex items-center gap-3">
-					<Button asChild variant="surface" size="2">
-						<Link href={`/settings/${companyId}`}>←</Link>
+					<Button asChild size="2" className="gap-1.5 rounded-full border border-zinc-300 bg-white px-3 text-zinc-700">
+						<Link href={`/home/${companyId}`}>← Back</Link>
 					</Button>
-					<Heading size="6">Nudges Sent</Heading>
+					<Heading size="6" className="text-[20px] font-bold text-[#111111]">Nudges Sent</Heading>
 				</div>
 
 				{rows.length === 0 ? (
-					<div className="flex min-h-[55vh] items-center justify-center text-center">
-						<Text color="gray">
-							No nudges sent yet - Nudge is running in the background.
+					<div className="flex min-h-[68vh] flex-col items-center justify-center px-4 text-center">
+						<Text className="text-[48px]">📭</Text>
+						<Heading size="4" className="mt-4 text-[18px] font-semibold text-[#111111]">
+							Nothing sent yet
+						</Heading>
+						<Text className="mt-2 max-w-[300px] text-[14px] leading-[1.6] text-[#888888]">
+							Nudge is running in the background. When a member gets a nudge, it&apos;ll appear
+							here.
 						</Text>
 					</div>
 				) : (
@@ -71,21 +92,29 @@ export default async function NudgeLogPage({
 						{rows.map((row) => {
 							const badge = getTriggerBadge(row.trigger_type);
 							return (
-								<Card key={row.id}>
-									<div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-6">
-										<div className="min-w-0 flex-1">
-											<Badge color={badge.color}>
-												{badge.label}
-											</Badge>
-											<Text weight="bold" className="mt-2">
-												@{row.username}
-											</Text>
-											<Text color="gray" className="mt-1 truncate">
-												{truncate(row.message_sent, 80)}
-											</Text>
-										</div>
-										<Text size="1" color="gray" className="md:text-right">
-											{new Date(row.sent_at).toLocaleString()}
+								<Card
+									key={row.id}
+									className="mx-1 rounded-xl bg-white px-4 py-3.5 [box-shadow:0_1px_3px_rgba(0,0,0,0.06)]"
+								>
+									<div className="flex items-center justify-between gap-3">
+										<span
+											className={[
+												"inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-medium",
+												badge.className,
+											].join(" ")}
+										>
+											{badge.label}
+										</span>
+										<Text className="text-[12px] text-[#9ca3af]">{formatTimestamp(row.sent_at)}</Text>
+									</div>
+
+									<Text className="mt-1.5 text-[14px] font-semibold text-[#111111]">
+										@{row.username}
+									</Text>
+
+									<div className="mt-1 rounded-lg bg-[#f9f9f9] px-3 py-2">
+										<Text className="text-[13px] italic text-[#666666]">
+											{truncate(row.message_sent, 100)}
 										</Text>
 									</div>
 								</Card>

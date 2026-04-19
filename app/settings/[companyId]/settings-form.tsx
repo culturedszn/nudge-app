@@ -100,7 +100,7 @@ export function SettingsForm({
 				throw new Error("Unable to save settings");
 			}
 
-			router.push(`/log/${companyId}`);
+			router.push(`/success/${companyId}`);
 			router.refresh();
 		} catch (saveError) {
 			console.error(saveError);
