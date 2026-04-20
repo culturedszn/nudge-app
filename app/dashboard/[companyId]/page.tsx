@@ -32,39 +32,45 @@ export default async function DashboardPage({
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] px-4 py-10">
 			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute -left-20 top-0 h-56 w-56 rounded-full bg-[#FA4616]/18 blur-3xl" />
-				<div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-[#0f172a]/8 blur-3xl" />
+				<div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#FA4616]/22 blur-3xl" />
+				<div className="absolute -right-24 top-24 h-80 w-80 rounded-full bg-[#0f172a]/10 blur-3xl" />
+				<div className="absolute bottom-0 left-1/2 h-64 w-[90%] -translate-x-1/2 rounded-full bg-white/35 blur-3xl" />
 			</div>
 
-			<div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[540px] items-center justify-center">
-				<div className="w-full rounded-[28px] border border-white/80 bg-white/75 p-7 text-center shadow-[0_24px_80px_rgba(15,23,42,0.14)] backdrop-blur-xl sm:p-9">
-					<div className="mx-auto h-[210px] w-auto">
+			<div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[760px] flex-col items-center justify-center text-center">
+				<div className="inline-flex items-center rounded-full border border-white/80 bg-white/60 px-3 py-1 text-[12px] font-semibold tracking-[0.08em] text-[#334155] backdrop-blur-sm">
+					WELCOME TO NUDGE
+				</div>
+
+				<div className="mt-6 rounded-[26px] border border-white/70 bg-white/30 p-5 backdrop-blur-md sm:p-7">
+					<div className="mx-auto h-[220px] w-auto sm:h-[250px]">
 						<Image
 							src="/whop-illo-telescope.svg"
 							alt="Telescope illustration"
-							width={240}
-							height={210}
+							width={290}
+							height={250}
 							className="h-full w-full object-contain"
 							priority
 						/>
 					</div>
-
-					<h1 className="mt-5 text-[30px] font-semibold tracking-[-0.02em] text-[#0f172a]">
-						Never lose a member again.
-					</h1>
-					<p className="mx-auto mt-3 max-w-[390px] text-[15px] leading-[1.65] text-[#526070]">
-						Nudge automatically re-engages inactive members, saves canceling subscribers,
-						and recovers failed payments. Set it up once, then let it run in the
-						background.
-					</p>
-					<Button
-						asChild
-						size="3"
-						className="mt-8 h-12 w-full rounded-xl bg-[#FA4616] text-[15px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
-					>
-						<Link href={`/settings/${companyId}`}>Set up Nudge</Link>
-					</Button>
 				</div>
+
+				<h1 className="mt-8 max-w-[640px] text-[34px] font-semibold tracking-[-0.03em] text-[#0f172a] sm:text-[44px]">
+					Turn churn into second chances.
+				</h1>
+				<p className="mx-auto mt-4 max-w-[560px] text-[16px] leading-[1.7] text-[#526070]">
+					Nudge gently reaches out to inactive members, canceling subscribers, and
+					failed payments so you recover revenue automatically while staying focused
+					on your community.
+				</p>
+
+				<Button
+					asChild
+					size="3"
+					className="mt-9 h-12 w-full max-w-[360px] rounded-xl bg-[#FA4616] text-[15px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+				>
+					<Link href={`/settings/${companyId}`}>Set up Nudge</Link>
+				</Button>
 			</div>
 		</div>
 	);
