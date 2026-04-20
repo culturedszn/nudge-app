@@ -39,12 +39,24 @@ export function Toast({
 		>
 			<div
 				className={[
-					"flex items-center gap-2 rounded-xl px-4 py-3 shadow-lg",
-					type === "success" ? "bg-[#16a34a] text-white" : "bg-[#dc2626] text-white",
+					"flex items-center gap-2 rounded-xl border bg-white/78 px-4 py-3 shadow-[0_12px_28px_rgba(15,23,42,0.16)] backdrop-blur-md",
+					type === "success" ? "border-emerald-200/80" : "border-red-200/80",
 				].join(" ")}
 			>
-				<Text className="text-white">{type === "success" ? "✓" : "✕"}</Text>
-				<Text className="text-white" size="2" weight="medium">
+				<Text
+					className={
+						type === "success"
+							? "font-semibold text-emerald-600"
+							: "font-semibold text-red-600"
+					}
+				>
+					{type === "success" ? "✓" : "✕"}
+				</Text>
+				<Text
+					size="2"
+					weight="medium"
+					className={type === "success" ? "text-emerald-700" : "text-red-700"}
+				>
 					{message}
 				</Text>
 			</div>
