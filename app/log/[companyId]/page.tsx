@@ -71,22 +71,28 @@ export default async function NudgeLogPage({
 			<div className="pointer-events-none absolute inset-0">
 				<div className="absolute -left-16 top-0 h-56 w-56 rounded-full bg-[#FA4616]/14 blur-3xl" />
 				<div className="absolute -right-16 bottom-12 h-64 w-64 rounded-full bg-[#0f172a]/7 blur-3xl" />
+				<div className="absolute bottom-0 left-1/2 h-56 w-[80%] -translate-x-1/2 rounded-full bg-white/35 blur-3xl" />
 			</div>
 
 			<div className="relative mx-auto w-full max-w-3xl">
 				<div className="mb-6 rounded-[20px] border border-white/80 bg-white/75 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.1)] backdrop-blur-xl md:p-5">
-					<div className="flex items-center gap-3">
+					<div className="flex items-center justify-between gap-3">
+						<div className="flex items-center gap-3">
 						<Button asChild size="2" className="gap-1.5 rounded-full border border-zinc-300 bg-white px-3 text-zinc-700">
-						<Link href={`/home/${companyId}`}>← Back</Link>
-					</Button>
+							<Link href={`/home/${companyId}`}>← Back</Link>
+						</Button>
 						<Heading size="6" className="text-[22px] font-semibold tracking-[-0.02em] text-[#0f172a]">
 							Nudges Sent
 						</Heading>
+						</div>
+						<Text className="rounded-full border border-white/75 bg-white/70 px-2.5 py-1 text-[12px] text-[#64748b] shadow-[0_6px_16px_rgba(15,23,42,0.06)] backdrop-blur-md">
+							{rows.length} total
+						</Text>
 					</div>
 				</div>
 
 				{rows.length === 0 ? (
-					<div className="flex min-h-[68vh] flex-col items-center justify-center px-4 text-center">
+					<div className="flex min-h-[68vh] flex-col items-center justify-center rounded-[20px] border border-white/80 bg-white/65 px-4 text-center shadow-[0_14px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl">
 						<Text className="text-[48px]">📭</Text>
 						<Heading size="4" className="mt-4 text-[18px] font-semibold text-[#111111]">
 							Nothing sent yet
@@ -103,9 +109,15 @@ export default async function NudgeLogPage({
 							return (
 								<Card
 									key={row.id}
-									className="mx-1 rounded-xl border border-white/85 bg-white/80 px-4 py-3.5 shadow-[0_8px_24px_rgba(15,23,42,0.08)] backdrop-blur-sm"
+									className="mx-1 rounded-2xl border border-white/85 bg-white/78 px-4 py-4 shadow-[0_10px_28px_rgba(15,23,42,0.08)] backdrop-blur-sm"
 								>
-									<div className="flex items-center justify-between gap-3">
+									<div className="flex items-start justify-between gap-3">
+										<div>
+											<Text className="text-[14px] font-semibold text-[#111111]">
+												@{row.username}
+											</Text>
+											<Text className="text-[12px] text-[#9ca3af]">{formatTimestamp(row.sent_at)}</Text>
+										</div>
 										<span
 											className={[
 												"inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-medium",
@@ -114,14 +126,9 @@ export default async function NudgeLogPage({
 										>
 											{badge.label}
 										</span>
-										<Text className="text-[12px] text-[#9ca3af]">{formatTimestamp(row.sent_at)}</Text>
 									</div>
 
-									<Text className="mt-1.5 text-[14px] font-semibold text-[#111111]">
-										@{row.username}
-									</Text>
-
-									<div className="mt-1 rounded-lg bg-[#f9f9f9] px-3 py-2">
+									<div className="mt-3 rounded-xl border border-white/70 bg-white/75 px-3 py-2.5 shadow-[0_8px_20px_rgba(15,23,42,0.06)]">
 										<Text className="text-[13px] italic text-[#666666]">
 											{truncate(row.message_sent, 100)}
 										</Text>

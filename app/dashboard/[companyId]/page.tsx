@@ -42,17 +42,15 @@ export default async function DashboardPage({
 					WELCOME TO NUDGE
 				</div>
 
-				<div className="mt-6 rounded-[26px] border border-white/70 bg-white/30 p-5 backdrop-blur-md sm:p-7">
-					<div className="mx-auto h-[220px] w-auto sm:h-[250px]">
-						<Image
-							src="/whop-illo-telescope.svg"
-							alt="Telescope illustration"
-							width={290}
-							height={250}
-							className="h-full w-full object-contain"
-							priority
-						/>
-					</div>
+				<div className="mt-7 mx-auto h-[220px] w-auto sm:h-[250px]">
+					<Image
+						src="/whop-illo-telescope.svg"
+						alt="Telescope illustration"
+						width={290}
+						height={250}
+						className="h-full w-full object-contain"
+						priority
+					/>
 				</div>
 
 				<h1 className="mt-8 max-w-[620px] text-[28px] font-semibold tracking-[-0.025em] text-[#0f172a] sm:text-[36px]">
