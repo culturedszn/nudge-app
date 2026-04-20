@@ -112,7 +112,7 @@ export function SettingsForm({
 
 	return (
 		<div className="space-y-6">
-			<div className="rounded-xl border border-orange-200/60 bg-gradient-to-r from-orange-50 to-white px-4 py-3">
+			<div className="rounded-xl border border-white/75 bg-white/70 px-4 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-md">
 				<Text size="2" weight="medium" className="text-[#FA4616]">
 					Write like a human. Keep it short, warm, and clear.
 				</Text>
@@ -129,11 +129,12 @@ export function SettingsForm({
 					setValues((prev) => ({ ...prev, inactive_enabled: enabled }))
 				}
 			>
-				<div className="space-y-2 rounded-lg border border-zinc-200/80 bg-zinc-50/60 p-3">
+				<div className="space-y-3 rounded-lg border border-white/75 bg-white/70 p-3 shadow-[0_8px_20px_rgba(15,23,42,0.06)] backdrop-blur-sm">
 					<Text size="1" weight="bold" className="uppercase tracking-[0.08em] text-zinc-600">
 						Send after
 					</Text>
-					<Select.Root
+					<div className="mt-1.5">
+						<Select.Root
 						value={String(values.inactive_days)}
 						onValueChange={(nextValue) =>
 							setValues((prev) => ({
@@ -141,15 +142,16 @@ export function SettingsForm({
 								inactive_days: Number(nextValue),
 							}))
 						}
-					>
-						<Select.Trigger />
-						<Select.Content>
-							<Select.Item value="3">3 days</Select.Item>
-							<Select.Item value="7">7 days</Select.Item>
-							<Select.Item value="14">14 days</Select.Item>
-							<Select.Item value="30">30 days</Select.Item>
-						</Select.Content>
-					</Select.Root>
+						>
+							<Select.Trigger className="bg-white/90" />
+							<Select.Content>
+								<Select.Item value="3">3 days</Select.Item>
+								<Select.Item value="7">7 days</Select.Item>
+								<Select.Item value="14">14 days</Select.Item>
+								<Select.Item value="30">30 days</Select.Item>
+							</Select.Content>
+						</Select.Root>
+					</div>
 				</div>
 				<MessageField
 					label="Message"
@@ -201,14 +203,14 @@ export function SettingsForm({
 			</TriggerCard>
 
 			{isSyncing ? (
-				<div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
+				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/70 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md">
 					<Spinner loading size="1" />
 					<Text color="gray" size="2">
 						Syncing members...
 					</Text>
 				</div>
 			) : (
-				<div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
+				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/70 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md">
 					<Text color="gray" size="2">
 						{`${trackedCount} members currently being tracked`}
 					</Text>
@@ -226,11 +228,7 @@ export function SettingsForm({
 				onClick={saveSettings}
 				disabled={isSaving}
 				size="3"
-				style={{
-					width: "100%",
-					backgroundColor: "#FA4616",
-					color: "white",
-				}}
+				className="h-12 w-full rounded-xl border border-white/40 bg-[linear-gradient(135deg,#ff6a3d,#FA4616)] text-[15px] font-semibold text-white shadow-[0_12px_30px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
 			>
 				<Spinner loading={isSaving} size="1">
 					{isSaving ? "Saving..." : "Save & Activate Nudge"}
@@ -254,7 +252,7 @@ function TriggerCard({
 	children: React.ReactNode;
 }) {
 	return (
-		<Card style={{ padding: "1.25rem" }}>
+		<Card className="rounded-[18px] border border-white/80 bg-white/78 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur-sm">
 			<div className="flex items-start justify-between gap-4">
 				<div className="min-w-0">
 					<Heading size="4" className="leading-tight">

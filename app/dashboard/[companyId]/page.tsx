@@ -55,19 +55,18 @@ export default async function DashboardPage({
 					</div>
 				</div>
 
-				<h1 className="mt-8 max-w-[640px] text-[34px] font-semibold tracking-[-0.03em] text-[#0f172a] sm:text-[44px]">
+				<h1 className="mt-8 max-w-[620px] text-[28px] font-semibold tracking-[-0.025em] text-[#0f172a] sm:text-[36px]">
 					Turn churn into second chances.
 				</h1>
-				<p className="mx-auto mt-4 max-w-[560px] text-[16px] leading-[1.7] text-[#526070]">
-					Nudge gently reaches out to inactive members, canceling subscribers, and
-					failed payments so you recover revenue automatically while staying focused
-					on your community.
+				<p className="mx-auto mt-3 max-w-[520px] text-[15px] leading-[1.65] text-[#526070]">
+					Nudge reaches inactive, canceling, and failed-payment members
+					automatically so you recover revenue without extra manual work.
 				</p>
 
 				<Button
 					asChild
 					size="3"
-					className="mt-9 h-12 w-full max-w-[360px] rounded-xl bg-[#FA4616] text-[15px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+					className="mt-8 h-12 w-full max-w-[360px] rounded-xl border border-white/40 bg-[linear-gradient(135deg,#ff6a3d,#FA4616)] text-[15px] font-semibold text-white shadow-[0_14px_34px_rgba(250,70,22,0.36)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
 				>
 					<Link href={`/settings/${companyId}`}>Set up Nudge</Link>
 				</Button>

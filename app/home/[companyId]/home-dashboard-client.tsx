@@ -89,7 +89,11 @@ export function HomeDashboardClient({
 			},
 		];
 
-		return nextCards.filter((card) => !deletedCards.has(card.key));
+		return nextCards.filter((card) => {
+			const hiddenByDeleteAction = deletedCards.has(card.key);
+			const hiddenByStoredDeleteState = !card.enabled && card.message.trim().length === 0;
+			return !hiddenByDeleteAction && !hiddenByStoredDeleteState;
+		});
 	}, [settings, deletedCards]);
 
 	const allPaused = cards.length > 0 && cards.every((card) => !card.enabled);
@@ -100,16 +104,16 @@ export function HomeDashboardClient({
 			const body: Record<string, unknown> = { company_id: companyId };
 			if (trigger === "inactive") {
 				body.inactive_enabled = false;
-				body.inactive_message = null;
-				body.inactive_days = null;
+				body.inactive_message = "";
+				body.inactive_days = settings?.inactive_days ?? 7;
 			}
 			if (trigger === "canceling") {
 				body.cancel_enabled = false;
-				body.cancel_message = null;
+				body.cancel_message = "";
 			}
 			if (trigger === "payment") {
 				body.payment_enabled = false;
-				body.payment_message = null;
+				body.payment_message = "";
 			}
 
 			const response = await fetch("/api/settings", {
@@ -192,14 +196,14 @@ export function HomeDashboardClient({
 						<Button
 							asChild
 							size="2"
-							className="h-10 rounded-lg border border-[#e2e8f0] bg-white px-3.5 text-[13px] font-medium text-[#334155]"
+							className="h-10 rounded-lg border border-white/70 bg-white/70 px-3.5 text-[13px] font-medium text-[#334155] shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5"
 						>
 							<Link href={`/settings/${companyId}`}>Settings</Link>
 						</Button>
 						<Button
 							asChild
 							size="2"
-							className="h-10 rounded-lg bg-[#FA4616] px-4 text-[13px] font-semibold text-white shadow-[0_10px_22px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+							className="h-10 rounded-lg border border-white/40 bg-[linear-gradient(135deg,#ff6a3d,#FA4616)] px-4 text-[13px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
 						>
 							<Link href={`/log/${companyId}`}>View sent nudges</Link>
 						</Button>
@@ -251,7 +255,7 @@ export function HomeDashboardClient({
 										<Button
 											type="button"
 											variant="ghost"
-											className="h-8 w-8 min-w-8 p-0 text-[#888888] transition-colors duration-200 hover:text-[#FA4616] hover:bg-[#fff5ed]"
+												className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/75 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-colors duration-200 hover:text-[#FA4616] hover:bg-[#fff5ed]"
 											asChild
 										>
 											<Link href={`/edit/${companyId}?trigger=${card.key}`}>
@@ -261,7 +265,7 @@ export function HomeDashboardClient({
 										<Button
 											type="button"
 											variant="ghost"
-											className="h-8 w-8 min-w-8 p-0 text-[#888888] transition-colors duration-200 hover:text-[#ef4444] hover:bg-[#fef2f2]"
+											className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/75 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-colors duration-200 hover:text-[#ef4444] hover:bg-[#fef2f2]"
 											onClick={() => setConfirmingDelete(card.key)}
 										>
 											<TrashIcon className="w-4 h-4" />

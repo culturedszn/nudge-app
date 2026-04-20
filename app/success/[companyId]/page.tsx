@@ -38,7 +38,7 @@ export default async function SuccessPage({
 					<Button
 						asChild
 						size="3"
-						className="mt-8 h-12 w-full rounded-xl bg-[#FA4616] text-[15px] font-semibold text-white shadow-[0_12px_28px_rgba(250,70,22,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
+						className="mt-8 h-12 w-full rounded-xl border border-white/40 bg-[linear-gradient(135deg,#ff6a3d,#FA4616)] text-[15px] font-semibold text-white shadow-[0_12px_30px_rgba(250,70,22,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:brightness-95"
 					>
 						<Link href={`/home/${companyId}`}>Go to Dashboard</Link>
 					</Button>

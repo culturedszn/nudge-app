@@ -33,6 +33,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 		});
 
 		const existing = existingRows[0];
+		const resolvedInactiveDays = hasKey(body, "inactive_days")
+			? (body.inactive_days ?? existing?.inactive_days ?? DEFAULT_SETTINGS.inactive_days)
+			: (existing?.inactive_days ?? DEFAULT_SETTINGS.inactive_days);
+		const resolvedInactiveMessage = hasKey(body, "inactive_message")
+			? (body.inactive_message ?? existing?.inactive_message ?? DEFAULT_SETTINGS.inactive_message)
+			: (existing?.inactive_message ?? DEFAULT_SETTINGS.inactive_message);
+		const resolvedCancelMessage = hasKey(body, "cancel_message")
+			? (body.cancel_message ?? existing?.cancel_message ?? DEFAULT_SETTINGS.cancel_message)
+			: (existing?.cancel_message ?? DEFAULT_SETTINGS.cancel_message);
+		const resolvedPaymentMessage = hasKey(body, "payment_message")
+			? (body.payment_message ?? existing?.payment_message ?? DEFAULT_SETTINGS.payment_message)
+			: (existing?.payment_message ?? DEFAULT_SETTINGS.payment_message);
 
 		await upsertRows({
 			table: "settings",
@@ -40,24 +52,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 			rows: [
 				{
 					company_id: body.company_id,
-					inactive_days: hasKey(body, "inactive_days")
-						? (body.inactive_days as number | null)
-						: (existing?.inactive_days ?? DEFAULT_SETTINGS.inactive_days),
-					inactive_message: hasKey(body, "inactive_message")
-						? (body.inactive_message as string | null)
-						: (existing?.inactive_message ?? DEFAULT_SETTINGS.inactive_message),
+					inactive_days: resolvedInactiveDays,
+					inactive_message: resolvedInactiveMessage,
 					inactive_enabled: hasKey(body, "inactive_enabled")
 						? (body.inactive_enabled as boolean)
 						: (existing?.inactive_enabled ?? DEFAULT_SETTINGS.inactive_enabled),
-					cancel_message: hasKey(body, "cancel_message")
-						? (body.cancel_message as string | null)
-						: (existing?.cancel_message ?? DEFAULT_SETTINGS.cancel_message),
+					cancel_message: resolvedCancelMessage,
 					cancel_enabled: hasKey(body, "cancel_enabled")
 						? (body.cancel_enabled as boolean)
 						: (existing?.cancel_enabled ?? DEFAULT_SETTINGS.cancel_enabled),
-					payment_message: hasKey(body, "payment_message")
-						? (body.payment_message as string | null)
-						: (existing?.payment_message ?? DEFAULT_SETTINGS.payment_message),
+					payment_message: resolvedPaymentMessage,
 					payment_enabled: hasKey(body, "payment_enabled")
 						? (body.payment_enabled as boolean)
 						: (existing?.payment_enabled ?? DEFAULT_SETTINGS.payment_enabled),
