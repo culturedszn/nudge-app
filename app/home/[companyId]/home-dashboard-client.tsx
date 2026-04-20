@@ -171,8 +171,8 @@ export function HomeDashboardClient({
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] pb-10">
 			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute -left-16 top-4 h-56 w-56 rounded-full bg-[#FA4616]/15 blur-3xl" />
-				<div className="absolute -right-20 top-28 h-72 w-72 rounded-full bg-[#0f172a]/7 blur-3xl" />
+				<div className="absolute -left-16 top-4 h-56 w-56 rounded-full bg-[#FA4616]/12 blur-2xl" />
+				<div className="absolute -right-20 top-28 h-72 w-72 rounded-full bg-[#0f172a]/6 blur-2xl" />
 			</div>
 
 			<div className="relative mx-auto w-full">
@@ -182,7 +182,7 @@ export function HomeDashboardClient({
 				visible={toastState.visible}
 			/>
 
-			<div className="border-b border-[#e2e8f0] bg-white/50 backdrop-blur-sm">
+			<div className="border-b border-[#e2e8f0] bg-white/55">
 				<div className="flex flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
 					<div>
 						<Heading size="6" className="text-[27px] font-semibold tracking-[-0.02em] text-[#0f172a]">
@@ -196,7 +196,7 @@ export function HomeDashboardClient({
 						<Button
 							asChild
 							size="2"
-							className="h-10 rounded-lg border border-white/70 bg-white/70 px-3.5 text-[13px] font-medium text-[#334155] shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5"
+							className="h-10 rounded-lg border border-white/70 bg-white/75 px-3.5 text-[13px] font-medium text-[#334155] shadow-[0_8px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5"
 						>
 							<Link href={`/settings/${companyId}`}>Settings</Link>
 						</Button>
@@ -220,7 +220,7 @@ export function HomeDashboardClient({
 				{cards.map((card) => (
 					<Card
 						key={card.key}
-						className="rounded-[18px] border border-white/80 bg-white/80 p-[18px] shadow-[0_10px_28px_rgba(15,23,42,0.08)] backdrop-blur-sm"
+						className="rounded-[18px] border border-white/80 bg-white/82 p-[18px] shadow-[0_10px_28px_rgba(15,23,42,0.08)]"
 					>
 						{confirmingDelete === card.key ? (
 							<div>
@@ -255,7 +255,7 @@ export function HomeDashboardClient({
 										<Button
 											type="button"
 											variant="ghost"
-												className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/75 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-colors duration-200 hover:text-[#FA4616] hover:bg-[#fff5ed]"
+												className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/85 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] transition-colors duration-200 hover:text-[#FA4616] hover:bg-[#fff5ed]"
 											asChild
 										>
 											<Link href={`/edit/${companyId}?trigger=${card.key}`}>
@@ -265,7 +265,7 @@ export function HomeDashboardClient({
 										<Button
 											type="button"
 											variant="ghost"
-											className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/75 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-colors duration-200 hover:text-[#ef4444] hover:bg-[#fef2f2]"
+											className="h-8 w-8 min-w-8 rounded-lg border border-white/60 bg-white/85 p-0 text-[#888888] shadow-[0_6px_16px_rgba(15,23,42,0.06)] transition-colors duration-200 hover:text-[#ef4444] hover:bg-[#fef2f2]"
 											onClick={() => setConfirmingDelete(card.key)}
 										>
 											<TrashIcon className="w-4 h-4" />
@@ -288,7 +288,7 @@ export function HomeDashboardClient({
 											className={[
 												"h-2 w-2 rounded-full",
 												card.enabled
-													? "bg-[#22c55e] animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+													? "bg-[#22c55e]"
 													: "bg-[#d1d5db]",
 											].join(" ")}
 										/>

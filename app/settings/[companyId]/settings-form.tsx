@@ -112,7 +112,7 @@ export function SettingsForm({
 
 	return (
 		<div className="space-y-6">
-			<div className="rounded-xl border border-white/75 bg-white/70 px-4 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-md">
+			<div className="rounded-xl border border-white/75 bg-white/78 px-4 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
 				<Text size="2" weight="medium" className="text-[#FA4616]">
 					Write like a human. Keep it short, warm, and clear.
 				</Text>
@@ -129,7 +129,7 @@ export function SettingsForm({
 					setValues((prev) => ({ ...prev, inactive_enabled: enabled }))
 				}
 			>
-				<div className="space-y-3 rounded-lg border border-white/75 bg-white/70 p-3 shadow-[0_8px_20px_rgba(15,23,42,0.06)] backdrop-blur-sm">
+				<div className="space-y-3 rounded-lg border border-white/75 bg-white/78 p-3 shadow-[0_8px_20px_rgba(15,23,42,0.06)]">
 					<Text size="1" weight="bold" className="uppercase tracking-[0.08em] text-zinc-600">
 						Send after
 					</Text>
@@ -203,14 +203,14 @@ export function SettingsForm({
 			</TriggerCard>
 
 			{isSyncing ? (
-				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/70 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md">
+				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/80 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)]">
 					<Spinner loading size="1" />
 					<Text color="gray" size="2">
 						Syncing members...
 					</Text>
 				</div>
 			) : (
-				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/70 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md">
+				<div className="inline-flex items-center gap-2 rounded-full border border-white/75 bg-white/80 px-3 py-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.08)]">
 					<Text color="gray" size="2">
 						{`${trackedCount} members currently being tracked`}
 					</Text>
@@ -252,7 +252,7 @@ function TriggerCard({
 	children: React.ReactNode;
 }) {
 	return (
-		<Card className="rounded-[18px] border border-white/80 bg-white/78 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur-sm">
+		<Card className="rounded-[18px] border border-white/80 bg-white/82 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
 			<div className="flex items-start justify-between gap-4">
 				<div className="min-w-0">
 					<Heading size="4" className="leading-tight">

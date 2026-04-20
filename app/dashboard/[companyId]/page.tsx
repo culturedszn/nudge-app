@@ -32,9 +32,9 @@ export default async function DashboardPage({
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] px-4 py-10">
 			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#FA4616]/22 blur-3xl" />
-				<div className="absolute -right-24 top-24 h-80 w-80 rounded-full bg-[#0f172a]/10 blur-3xl" />
-				<div className="absolute bottom-0 left-1/2 h-64 w-[90%] -translate-x-1/2 rounded-full bg-white/35 blur-3xl" />
+				<div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#FA4616]/18 blur-2xl" />
+				<div className="absolute -right-24 top-24 h-80 w-80 rounded-full bg-[#0f172a]/8 blur-2xl" />
+				<div className="absolute bottom-0 left-1/2 h-64 w-[90%] -translate-x-1/2 rounded-full bg-white/28 blur-2xl" />
 			</div>
 
 			<div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[760px] flex-col items-center justify-center text-center">

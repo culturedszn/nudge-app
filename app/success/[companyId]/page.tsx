@@ -12,12 +12,12 @@ export default async function SuccessPage({
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-[#f2f4f6] px-4 py-10 text-center">
 			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute -left-20 top-0 h-56 w-56 rounded-full bg-[#FA4616]/18 blur-3xl" />
-				<div className="absolute -right-20 bottom-8 h-64 w-64 rounded-full bg-[#0f172a]/8 blur-3xl" />
+				<div className="absolute -left-20 top-0 h-56 w-56 rounded-full bg-[#FA4616]/14 blur-2xl" />
+				<div className="absolute -right-20 bottom-8 h-64 w-64 rounded-full bg-[#0f172a]/6 blur-2xl" />
 			</div>
 
 			<div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[540px] items-center justify-center">
-				<div className="w-full rounded-[28px] border border-white/80 bg-white/75 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.14)] backdrop-blur-xl sm:p-9">
+				<div className="w-full rounded-[28px] border border-white/80 bg-white/80 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.14)] sm:p-9">
 					<Image
 						src="/thumbsup.svg"
 						alt="Thumbs up illustration"
